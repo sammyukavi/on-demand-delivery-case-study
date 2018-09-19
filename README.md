@@ -1,9 +1,9 @@
-#On Demand Delivery Case Study
+# On Demand Delivery Case Study
 
 This is a case study for an application that finds all possible order combination opportunities given the location 
 coordinates for each order
 
-##Problem
+## Problem
 A company providing on-demand delivery services needs to find opportunities for combining delivery order such that its 
 customers can share cost and drivers and riders on their platform can maximise their earnings by doing more deliveries 
 at a lower fuel cost. Consider two order A and B. Order A’s pickup location is X and dropoff is Y. Order B’s pickup
@@ -16,7 +16,7 @@ that demonstrates how the company can find such order. Come up with a general so
  combination opportunities. Also bear in mind that paths for such order will not always be overlapping as in the case 
  above, but could also be intersecting, or just near each other without touching
 
-##How to run the code
+## How to run the code
 This is a Gradle project. To run open a console on the root project directory and type
 
 `gradle run`
