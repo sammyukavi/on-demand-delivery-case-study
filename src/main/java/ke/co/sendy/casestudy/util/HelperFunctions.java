@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import static ke.co.sendy.casestudy.util.Constants.BillingUnits.ROUND_TO_PLACES;
+import static ke.co.sendy.casestudy.util.Constants.DistanceUnits.KILOMETRES;
 
 /**
  * This class contains helper functions used in the application
@@ -102,6 +103,19 @@ public class HelperFunctions {
 		}
 		
 		return (dist);
+	}
+	
+	/**
+	 * Calculates the distance between two locations
+	 *
+	 * @param lat1 Latitude of location 1
+	 * @param lon1 Longitude of location 1
+	 * @param lat2 Latitude of location 2
+	 * @param lon2 Latitude of location 2
+	 * @return distance in the given units
+	 */
+	public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+		return calculateDistance(lat1, lon1, lat2, lon2, KILOMETRES);
 	}
 	
 }
