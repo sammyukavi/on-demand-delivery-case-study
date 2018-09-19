@@ -9,6 +9,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * This is a test class for testing the Estimator class and methods
+ */
 public class EstimatorTest {
 	
 	private Estimator estimator;

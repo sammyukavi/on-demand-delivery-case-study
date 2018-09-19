@@ -3,7 +3,7 @@ package ke.co.sendy.casestudy;
 import ke.co.sendy.casestudy.models.Location;
 import ke.co.sendy.casestudy.models.Order;
 import ke.co.sendy.casestudy.models.Trip;
-import ke.co.sendy.casestudy.util.HelperFunctions;
+import ke.co.sendy.casestudy.util.Helpers;
 
 import java.util.ArrayList;
 
@@ -63,7 +63,7 @@ public class MainApplication {
 				Trip trip = tripsWithOrders.get(index);
 				ArrayList<Order> fullTripOrders = trip.getOrders();
 				System.out.println("Route: " + (index + 1));
-				System.out.println("Route Distance (KM): " + HelperFunctions.round(trip.getFullDistance()));
+				System.out.println("Route Distance (KM): " + Helpers.round(trip.getFullDistance()));
 				System.out.println("Route Start Point: " + trip.getStartPoint().getLatitude() + "," +
 						trip.getStartPoint().getLongitude());
 				System.out.println("Route End Point: " + trip.getEndPoint().getLatitude() + "," +
@@ -74,12 +74,12 @@ public class MainApplication {
 					System.out.println("\tOrder name: " + order.getName());
 					System.out.println("\tOrder destination: " + order.getDropOffLocation().getLatitude() + "," +
 							order.getDropOffLocation().getLongitude());
-					System.out.println("\tOrder distance (KM): " + HelperFunctions.round(order.getExpectedTravelDistanceKiloMetres()));
+					System.out.println("\tOrder distance (KM): " + Helpers.round(order.getExpectedTravelDistanceKiloMetres()));
 					System.out.println("\tCost (KES): " + order.getOrderCost());
 					System.out.println("\n");
 				});
 			}
-		}else{
+		} else {
 			System.out.println("\nNo orders for today\n");
 		}
 		

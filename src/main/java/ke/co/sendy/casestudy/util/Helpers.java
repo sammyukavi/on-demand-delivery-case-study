@@ -13,7 +13,7 @@ import static ke.co.sendy.casestudy.util.Constants.DistanceUnits.KILOMETRES;
 /**
  * This class contains helper functions used in the application
  */
-public class HelperFunctions {
+public class Helpers {
 	
 	/**
 	 * Sorts a map by value

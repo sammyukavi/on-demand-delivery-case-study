@@ -8,7 +8,10 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HelperFunctionsTest {
+/**
+ * This is a test class for testing the Helper class and methods
+ */
+public class HelpersTest {
 	
 	private Map<Order, String> items = new HashMap<>();
 	private Map<Order, String> expected = new HashMap<>();
@@ -31,25 +34,25 @@ public class HelperFunctionsTest {
 	
 	@Test
 	public void testRound() {
-		double result = HelperFunctions.round(number);
+		double result = Helpers.round(number);
 		Assert.assertEquals(1.05, result, 2);
 	}
 	
 	@Test
 	public void testRoundWithPlaces() {
-		double result = HelperFunctions.round(number, 1);
+		double result = Helpers.round(number, 1);
 		Assert.assertEquals(1.0, result, 0);
 	}
 	
 	@Test
 	public void testCalculateDistance() {
-		double result = HelperFunctions.calculateDistance(-1.300176, 36.776714, -1.256631, 36.852722);
+		double result = Helpers.calculateDistance(-1.300176, 36.776714, -1.256631, 36.852722);
 		Assert.assertEquals(10, Math.ceil(result), 0);
 	}
 	
 	@Test
 	public void testSortByValue() {
-		Map<Order, String> sorted = HelperFunctions.sortByValue(items);
+		Map<Order, String> sorted = Helpers.sortByValue(items);
 		Assert.assertEquals(expected, sorted);
 	}
 	

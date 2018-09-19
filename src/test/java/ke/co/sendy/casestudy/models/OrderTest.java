@@ -3,6 +3,9 @@ package ke.co.sendy.casestudy.models;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * This is a test class for testing the Order class and methods
+ */
 public class OrderTest {
 	
 	@Test

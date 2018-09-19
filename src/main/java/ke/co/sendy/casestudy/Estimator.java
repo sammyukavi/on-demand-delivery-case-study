@@ -3,7 +3,7 @@ package ke.co.sendy.casestudy;
 import ke.co.sendy.casestudy.models.Location;
 import ke.co.sendy.casestudy.models.Order;
 import ke.co.sendy.casestudy.models.Trip;
-import ke.co.sendy.casestudy.util.HelperFunctions;
+import ke.co.sendy.casestudy.util.Helpers;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -39,7 +39,7 @@ class Estimator {
 		Create a map of locations with distances between each location
 		 */
 		locationArrayList.forEach(locationA -> locationArrayList.forEach(locationB -> {
-			double distanceDifference = HelperFunctions.calculateDistance(locationA.getLatitude(), locationA.getLongitude(),
+			double distanceDifference = Helpers.calculateDistance(locationA.getLatitude(), locationA.getLongitude(),
 					locationB.getLatitude(), locationB.getLongitude(), KILOMETRES);
 			if (locationA.getLatitude() != locationB.getLatitude()
 					&& locationA.getLongitude() != locationB.getLongitude()) {
@@ -53,7 +53,7 @@ class Estimator {
 			}
 		}));
 		
-		locationsMap = HelperFunctions.sortByValue(locationsMap);
+		locationsMap = Helpers.sortByValue(locationsMap);
 		
 		/*
 		Get all orders to be picked or dropped during a specific trip

@@ -1,14 +1,14 @@
 package ke.co.sendy.casestudy.models;
 
 import com.sun.istack.internal.NotNull;
-import ke.co.sendy.casestudy.util.HelperFunctions;
+import ke.co.sendy.casestudy.util.Helpers;
 
 import java.util.Date;
 
 import static ke.co.sendy.casestudy.util.Constants.BillingUnits.COST_PER_KILOMETRE;
 import static ke.co.sendy.casestudy.util.Constants.BillingUnits.ROUND_TO_PLACES;
 import static ke.co.sendy.casestudy.util.Constants.DistanceUnits.KILOMETRES;
-import static ke.co.sendy.casestudy.util.HelperFunctions.calculateDistance;
+import static ke.co.sendy.casestudy.util.Helpers.calculateDistance;
 
 /**
  * This class is a blueprint for the Order model
@@ -108,7 +108,7 @@ public class Order {
 	 * @return a float containing the cost of the order
 	 */
 	public double getOrderCost() {
-		return HelperFunctions.round(getExpectedTravelDistanceKiloMetres() * COST_PER_KILOMETRE, ROUND_TO_PLACES);
+		return Helpers.round(getExpectedTravelDistanceKiloMetres() * COST_PER_KILOMETRE, ROUND_TO_PLACES);
 	}
 	
 	/**
