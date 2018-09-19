@@ -47,7 +47,7 @@ class Estimator {
 				trip.setStartPoint(locationA);
 				trip.setEndPoint(locationB);
 				trip.setFullDistance(distanceDifference);
-				if (!containsRoute(locationsMap, trip)) {
+				if (!containsTrip(locationsMap, trip)) {
 					locationsMap.put(trip, distanceDifference);
 				}
 			}
@@ -81,7 +81,7 @@ class Estimator {
 	 * @param tripToCheck route to check if exists in the map
 	 * @return true if the route exists in the map or false if the route does not exist in a map
 	 */
-	private boolean containsRoute(Map<Trip, Double> tripsMap, Trip tripToCheck) {
+	private boolean containsTrip(Map<Trip, Double> tripsMap, Trip tripToCheck) {
 		
 		for (Trip trip : tripsMap.keySet()) {
 			if ((trip.getStartPoint() == tripToCheck.getStartPoint()) &&
