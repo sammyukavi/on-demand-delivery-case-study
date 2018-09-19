@@ -1,10 +1,17 @@
 package ke.co.sendy.casestudy.models;
 
+import com.sun.istack.internal.NotNull;
+import ke.co.sendy.casestudy.util.HelperFunctions;
+
+import java.util.Date;
+
 import static ke.co.sendy.casestudy.util.Constants.BillingUnits.COST_PER_KILOMETRE;
+import static ke.co.sendy.casestudy.util.Constants.BillingUnits.ROUND_TO_PLACES;
 import static ke.co.sendy.casestudy.util.Constants.DistanceUnits.KILOMETRES;
+import static ke.co.sendy.casestudy.util.HelperFunctions.calculateDistance;
 
 /**
- * This is a blueprint for the Order model
+ * This class is a blueprint for the Order model
  *
  * @author Sammy Ukavi
  */
@@ -21,9 +28,15 @@ public class Order {
 	private Location dropOffLocation;
 	
 	/**
+	 * The time when an order was dropped off for delivery
+	 */
+	private Date dropOffTime;
+	
+	/**
 	 * The location where an order is going to be picked up
 	 */
 	private Location pickUpLocation;
+	
 	
 	Order(String name, Location pickUpLocation, Location dropOffLocation) {
 		this.name = name;
@@ -31,43 +44,8 @@ public class Order {
 		this.dropOffLocation = dropOffLocation;
 	}
 	
-	Order() {
+	public Order() {
 	
-	}
-	
-	/**
-	 * Converts decimal degrees to radians
-	 *
-	 * @param deg a double containing the degrees to convert
-	 * @return a double containing the converted radians
-	 */
-	private double deg2rad(double deg) {
-		return (deg * Math.PI / 180.0);
-	}
-	
-	/**
-	 * Converts radians to decimal degrees
-	 *
-	 * @param rad a double containing the radians to convert to degrees
-	 * @return a double containing the converted degrees
-	 */
-	private double rad2deg(double rad) {
-		return (rad * 180 / Math.PI);
-	}
-	
-	private double calculateDistance(double lat1, double lon1, double lat2, double lon2, String unit) {
-		double theta = lon1 - lon2;
-		double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-		dist = Math.acos(dist);
-		dist = rad2deg(dist);
-		dist = dist * 60 * 1.1515;
-		if (("K").equals(unit)) {
-			dist = dist * 1.609344;
-		} else if (("N").equals(unit)) {
-			dist = dist * 0.8684;
-		}
-		
-		return (dist);
 	}
 	
 	/**
@@ -75,7 +53,7 @@ public class Order {
 	 *
 	 * @return a string containing the name of the order
 	 */
-	String getName() {
+	public String getName() {
 		return name;
 	}
 	
@@ -84,7 +62,7 @@ public class Order {
 	 *
 	 * @param name a string containing the name of the order
 	 */
-	void setName(String name) {
+	public void setName(@NotNull String name) {
 		this.name = name;
 	}
 	
@@ -102,7 +80,7 @@ public class Order {
 	 *
 	 * @param dropOffLocation a location object with co-ordinates
 	 */
-	void setDropOffLocation(Location dropOffLocation) {
+	public void setDropOffLocation(@NotNull Location dropOffLocation) {
 		this.dropOffLocation = dropOffLocation;
 	}
 	
@@ -120,7 +98,7 @@ public class Order {
 	 *
 	 * @param pickUpLocation a location object with co-ordinates
 	 */
-	void setPickUpLocation(Location pickUpLocation) {
+	public void setPickUpLocation(@NotNull Location pickUpLocation) {
 		this.pickUpLocation = pickUpLocation;
 	}
 	
@@ -129,8 +107,8 @@ public class Order {
 	 *
 	 * @return a float containing the cost of the order
 	 */
-	double getOrderCost() {
-		return getTravelDistanceKiloMetres() * COST_PER_KILOMETRE;
+	public double getOrderCost() {
+		return HelperFunctions.round(getExpectedTravelDistanceKiloMetres() * COST_PER_KILOMETRE, ROUND_TO_PLACES);
 	}
 	
 	/**
@@ -138,9 +116,26 @@ public class Order {
 	 *
 	 * @return a double indicating the distance between the pick up location and drop off location in kilometres
 	 */
-	double getTravelDistanceKiloMetres() {
+	public double getExpectedTravelDistanceKiloMetres() {
 		return calculateDistance(pickUpLocation.getLatitude(), pickUpLocation.getLongitude(), dropOffLocation.getLatitude(),
 				dropOffLocation.getLongitude(), KILOMETRES);
 	}
 	
+	/**
+	 * Get the time when an order was dropped off.
+	 *
+	 * @return the time when an order was dropped off
+	 */
+	public Date getDropOffTime() {
+		return dropOffTime;
+	}
+	
+	/**
+	 * Set the time when an order was dropped off
+	 *
+	 * @param dropOffTime the time when an order was dropped off
+	 */
+	public void setDropOffTime(@NotNull Date dropOffTime) {
+		this.dropOffTime = dropOffTime;
+	}
 }

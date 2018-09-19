@@ -1,6 +1,11 @@
 package ke.co.sendy.casestudy.models;
 
-class Location {
+/**
+ * This class is a blueprint for the Location model
+ *
+ * @author Sammy Ukavi
+ */
+public class Location {
 	
 	private double latitude;
 	
@@ -10,12 +15,12 @@ class Location {
 	
 	}
 	
-	Location(double latitude, double longitude) {
+	public Location(double latitude, double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
 	
-	double getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 	
@@ -23,7 +28,7 @@ class Location {
 		this.latitude = latitude;
 	}
 	
-	double getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 	

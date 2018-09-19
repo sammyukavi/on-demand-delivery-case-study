@@ -19,7 +19,7 @@ public class OrderTest {
 		Order order = new Order("Test Order 1", pickUpLocation, dropOffLocation);
 		
 		Assert.assertEquals("Test Order 1", order.getName());
-		Assert.assertEquals(0, order.getTravelDistanceKiloMetres(), 0);
+		Assert.assertEquals(0, order.getExpectedTravelDistanceKiloMetres(), 0);
 		Assert.assertEquals(0, order.getOrderCost(), 0);
 		
 		
@@ -29,7 +29,7 @@ public class OrderTest {
 		Order order2 = new Order("Test Order 2", pickUpLocation, dropOffLocation2);
 		
 		Assert.assertEquals("Test Order 2", order2.getName());
-		Assert.assertEquals(10, Math.ceil(order2.getTravelDistanceKiloMetres()), 0);
+		Assert.assertEquals(10, Math.ceil(order2.getExpectedTravelDistanceKiloMetres()), 0);
 		Assert.assertEquals(293, Math.ceil(order2.getOrderCost()), 0);
 		
 	}
