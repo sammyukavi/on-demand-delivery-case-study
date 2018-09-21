@@ -2,10 +2,9 @@ package ke.co.sendy.casestudy;
 
 import ke.co.sendy.casestudy.models.Location;
 import ke.co.sendy.casestudy.models.Order;
-import ke.co.sendy.casestudy.models.Trip;
-import ke.co.sendy.casestudy.util.Helpers;
 
 import java.util.ArrayList;
+import org.joda.time.DateTime;
 
 /**
  * This application finds the shortest routes to deliver packages given the origin and destination
@@ -20,41 +19,64 @@ public class MainApplication {
 	 */
 	public static void main(String[] args) {
 		
+		//We are going to simulate a package from Nairobi to Kampala
+		//Another package will be leaving Malaba for Kampala
 		//To simulate the process we first create locations for various orders
 		
-		Location x = new Location(-1.2833d, 36.8167d);
-		Location y = new Location(-1.3178389d, 36.8425681d);
-		Location z = new Location(-1.3283943d, 36.8679232d);
+		Location nairobi = new Location(-1.28333d, 36.81667d);
+		nairobi.setName("Nairobi");
+                
+		Location malaba = new Location(0.63457d, 34.2756d);
+		malaba.setName("Malaba");
+                
+		Location jinja = new Location(0.43902d, 33.20317d);
+		jinja.setName("Jinja");
+                
+		Location kampala = new Location(0.347596d, 32.582520d);
+		kampala.setName("Kampala");
 		
 		//Then we create orders and add them to a list
 		
 		ArrayList<Order> orders = new ArrayList<>();
+                DateTime dateTime = new DateTime();
 		
 		Order orderA = new Order();
 		orderA.setName("Order A");
-		orderA.setPickUpLocation(x);
-		orderA.setDropOffLocation(y);
+		orderA.setPickUpLocation(nairobi);
+		orderA.setDropOffLocation(malaba);
+		orderA.setDropOffTime(dateTime);
 		orders.add(orderA);
 		
 		
 		Order orderB = new Order();
 		orderB.setName("Order B");
-		orderB.setPickUpLocation(x);
-		orderB.setDropOffLocation(z);
+		orderB.setPickUpLocation(nairobi);
+		orderB.setDropOffLocation(kampala);
+                orderB.setDropOffTime(dateTime.plusMinutes(1));
 		orders.add(orderB);
 		
 		
 		Order orderC = new Order();
 		orderC.setName("Order C");
-		orderC.setPickUpLocation(y);
-		orderC.setDropOffLocation(z);
+		orderC.setPickUpLocation(malaba);
+		orderC.setDropOffLocation(kampala);
+                orderC.setDropOffTime(dateTime.minusHours(6));
 		orders.add(orderC);
+                
+		Order orderD = new Order();
+		orderD.setName("Order C");
+		orderD.setPickUpLocation(malaba);
+		orderD.setDropOffLocation(jinja);
+                orderD.setDropOffTime(dateTime.minusHours(5));
+		orders.add(orderD);
 		
 		//Create an instance of our estimator class
 		Estimator estimator = new Estimator();
+                estimator.setTripStartLocation(nairobi);		
+		estimator.selectBestRoute(orders);
 		
+		/*
 		ArrayList<Trip> tripsWithOrders = estimator.selectBestRoute(orders);
-		
 		if (!tripsWithOrders.isEmpty()) {
 			
 			System.out.println("\nWe suggest the following routes for delivery of orders\n");
@@ -81,7 +103,7 @@ public class MainApplication {
 			}
 		} else {
 			System.out.println("\nNo orders for today\n");
-		}
+		}*/
 		
 	}
 }

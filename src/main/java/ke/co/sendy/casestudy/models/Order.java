@@ -2,7 +2,7 @@ package ke.co.sendy.casestudy.models;
 
 import ke.co.sendy.casestudy.util.Helpers;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 import static ke.co.sendy.casestudy.util.Constants.BillingUnits.COST_PER_KILOMETRE;
 import static ke.co.sendy.casestudy.util.Constants.BillingUnits.ROUND_TO_PLACES;
@@ -29,7 +29,7 @@ public class Order {
 	/**
 	 * The time when an order was dropped off for delivery
 	 */
-	private Date dropOffTime;
+	private DateTime dropOffTime;
 	
 	/**
 	 * The location where an order is going to be picked up
@@ -125,7 +125,7 @@ public class Order {
 	 *
 	 * @return the time when an order was dropped off
 	 */
-	public Date getDropOffTime() {
+	public DateTime getDropOffTime() {
 		return dropOffTime;
 	}
 	
@@ -134,7 +134,7 @@ public class Order {
 	 *
 	 * @param dropOffTime the time when an order was dropped off
 	 */
-	public void setDropOffTime(Date dropOffTime) {
+	public void setDropOffTime(DateTime dropOffTime) {
 		this.dropOffTime = dropOffTime;
 	}
 }
