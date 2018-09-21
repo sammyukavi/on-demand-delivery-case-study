@@ -1,6 +1,5 @@
 package ke.co.sendy.casestudy.models;
 
-import com.sun.istack.internal.NotNull;
 import ke.co.sendy.casestudy.util.Helpers;
 
 import java.util.Date;
@@ -62,7 +61,7 @@ public class Order {
 	 *
 	 * @param name a string containing the name of the order
 	 */
-	public void setName(@NotNull String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	
@@ -80,7 +79,7 @@ public class Order {
 	 *
 	 * @param dropOffLocation a location object with co-ordinates
 	 */
-	public void setDropOffLocation(@NotNull Location dropOffLocation) {
+	public void setDropOffLocation(Location dropOffLocation) {
 		this.dropOffLocation = dropOffLocation;
 	}
 	
@@ -98,7 +97,7 @@ public class Order {
 	 *
 	 * @param pickUpLocation a location object with co-ordinates
 	 */
-	public void setPickUpLocation(@NotNull Location pickUpLocation) {
+	public void setPickUpLocation(Location pickUpLocation) {
 		this.pickUpLocation = pickUpLocation;
 	}
 	
@@ -135,7 +134,7 @@ public class Order {
 	 *
 	 * @param dropOffTime the time when an order was dropped off
 	 */
-	public void setDropOffTime(@NotNull Date dropOffTime) {
+	public void setDropOffTime(Date dropOffTime) {
 		this.dropOffTime = dropOffTime;
 	}
 }

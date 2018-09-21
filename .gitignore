@@ -26,7 +26,7 @@ modules.xml
 *.tar.gz
 *.rar
 hs_err_pid*
-nbproject/private/
+nbproject/
 build/
 nbbuild/
 dist/

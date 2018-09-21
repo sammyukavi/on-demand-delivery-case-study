@@ -3,9 +3,7 @@ package ke.co.sendy.casestudy;
 import ke.co.sendy.casestudy.models.Location;
 import ke.co.sendy.casestudy.models.Order;
 import ke.co.sendy.casestudy.models.Trip;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.ArrayList;
 
@@ -19,6 +17,14 @@ public class EstimatorTest {
 	private Location x, y, z;
 	private Order orderOne, orderTwo, orderThree;
 	
+	@BeforeClass
+	public static void setUpClass() {
+	}
+	
+	@AfterClass
+	public static void tearDownClass() {
+	}
+	
 	@Before
 	public void setUp() {
 		
@@ -29,13 +35,11 @@ public class EstimatorTest {
 		y = new Location(-1.2178389d, 36.4852861d);
 		z = new Location(-1.3283943d, 36.8679232d);
 		
-		
 		orderOne = new Order();
 		orderOne.setName("Order One");
 		orderOne.setPickUpLocation(x);
 		orderOne.setDropOffLocation(y);
 		orders.add(orderOne);
-		
 		
 		orderTwo = new Order();
 		orderTwo.setName("Order Two");
@@ -43,12 +47,15 @@ public class EstimatorTest {
 		orderTwo.setDropOffLocation(z);
 		orders.add(orderTwo);
 		
-		
 		orderThree = new Order();
 		orderThree.setName("Order Three");
 		orderThree.setPickUpLocation(y);
 		orderThree.setDropOffLocation(z);
 		orders.add(orderThree);
+	}
+	
+	@After
+	public void tearDown() {
 	}
 	
 	@Test

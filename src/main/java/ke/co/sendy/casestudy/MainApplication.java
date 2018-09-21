@@ -16,7 +16,7 @@ public class MainApplication {
 	/**
 	 * This is the main entry point of the application
 	 *
-	 * @param args Any params passed via commandline to the application
+	 * @param args Any params passed via command line to the application
 	 */
 	public static void main(String[] args) {
 		
