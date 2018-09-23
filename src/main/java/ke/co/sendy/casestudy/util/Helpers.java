@@ -1,7 +1,5 @@
 package ke.co.sendy.casestudy.util;
 
-import ke.co.sendy.casestudy.models.Order;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -120,7 +118,4 @@ public class Helpers {
 		return calculateDistance(latitude1, longitude1, latitude2, longitude2, KILOMETRES);
 	}
 	
-	public static ArrayList<Map<Order, Double>> sortByValue(ArrayList<Map<Order, Double>> orderDropOffLocationsArrayList) {
-		return null;
-	}
 }

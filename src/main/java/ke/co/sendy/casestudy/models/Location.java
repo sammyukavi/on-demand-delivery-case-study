@@ -12,11 +12,13 @@ public class Location {
 	private double longitude;
 	private String name;
 	
-	public Location() {
-	
+	public Location(double latitude, double longitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 	
-	public Location(double latitude, double longitude) {
+	public Location(String name, double latitude, double longitude) {
+		this.name = name;
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}

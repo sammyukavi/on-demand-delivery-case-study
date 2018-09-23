@@ -3,7 +3,6 @@ package ke.co.sendy.casestudy;
 import ke.co.sendy.casestudy.models.Location;
 import ke.co.sendy.casestudy.models.Order;
 import ke.co.sendy.casestudy.models.Trip;
-import ke.co.sendy.casestudy.util.Console;
 import ke.co.sendy.casestudy.util.Helpers;
 
 import java.util.*;
@@ -90,9 +89,9 @@ class Estimator {
 		
 		if (tripStartLocation == null) {
 			Order firstOrder = orders.get(0);
-			tripStartLocation.setName(firstOrder.getPickUpLocation().getName());
-			tripStartLocation.setLatitude(firstOrder.getPickUpLocation().getLatitude());
-			tripStartLocation.setLongitude(firstOrder.getPickUpLocation().getLongitude());
+			tripStartLocation = new Location(firstOrder.getPickUpLocation().getName(),
+					firstOrder.getPickUpLocation().getLatitude(),
+					firstOrder.getPickUpLocation().getLongitude());
 		}
         
         /*
@@ -100,9 +99,10 @@ class Estimator {
         locations
         */
 		orders.forEach(order -> {
-			double distanceToDropOff = Helpers.calculateDistance(tripStartLocation.getLatitude(),
-					tripStartLocation.getLongitude(), order.getDropOffLocation().getLatitude(),
-					order.getDropOffLocation().getLongitude());
+			double distanceToDropOff = Helpers.calculateDistance(
+					tripStartLocation.getLatitude(), tripStartLocation.getLongitude(),
+					order.getDropOffLocation().getLatitude(), order.getDropOffLocation().getLongitude()
+			);
 			orderDistanceToDropOffMap.put(order, distanceToDropOff);
 		});
 		
@@ -117,7 +117,6 @@ class Estimator {
 		 */
 		
 		orderDistanceToDropOffMap.keySet().forEach((order) -> {
-			
 			if (precedingOrder != null) {
 				if (previousOrderDistanceToDropOff == orderDistanceToDropOffMap.get(order)) {
 					if (order.getExpectedTravelDistance() < precedingOrder.getExpectedTravelDistance()) {
@@ -139,11 +138,6 @@ class Estimator {
 		Set<Order> linkedHashSet = new LinkedHashSet<>(orderTripsArrayList);
 		orderTripsArrayList.clear();
 		orderTripsArrayList.addAll(linkedHashSet);
-		
-		orderTripsArrayList.forEach(order -> {
-			Console.log(order.getDropOffLocation().getName());
-		});
-		
 		
 		return new ArrayList<>();
 	}
