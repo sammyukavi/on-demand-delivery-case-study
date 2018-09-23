@@ -49,6 +49,9 @@ public class MainApplication {
 		Location kisumu = new Location(-0.10221d, 34.76171d);
 		kisumu.setName("Kisumu");
 		
+		Location kisii = new Location(-0.68174d, 34.76666d);
+		kisii.setName("Kisii");
+		
 		/*
 		Then we create orders and add them to a list
 		 */
@@ -89,6 +92,12 @@ public class MainApplication {
 		orderF.setPickUpLocation(kisumu);
 		orderF.setDropOffLocation(busia);
 		orders.add(orderF);
+		
+		Order orderG = new Order();
+		orderG.setName("Order G");
+		orderG.setPickUpLocation(kisii);
+		orderG.setDropOffLocation(busia);
+		orders.add(orderG);
 		
 		/*
 		Create an instance of our estimator class
