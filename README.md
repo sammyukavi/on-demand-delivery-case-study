@@ -7,7 +7,7 @@ coordinates for each order
 A company providing on-demand delivery services needs to find opportunities for combining delivery order such that its 
 customers can share cost and drivers and riders on their platform can maximise their earnings by doing more deliveries 
 at a lower fuel cost. Consider two order A and B. Order A’s pickup location is X and dropoff is Y. Order B’s pickup
-is at location X and dropoff at Z. One can get to Z via Y. Say the trip from X to Y is 5 km, Z is 3 km from Y, and the order cost is KSh 30/km. Also, the two order are placed within a short
+is at location X and dropoff at Z. One can get to Z via Y. Say the route from X to Y is 5 km, Z is 3 km from Y, and the order cost is KSh 30/km. Also, the two order are placed within a short
 span of each other. In this example assume order B is placed a minute after order A. These order can be combined in a way that a partner picks up both at X, delivers A at Y then
 proceeds to deliver B at Z.
 

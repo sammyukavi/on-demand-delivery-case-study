@@ -2,70 +2,59 @@ package ke.co.sendy.casestudy;
 
 import ke.co.sendy.casestudy.models.Location;
 import ke.co.sendy.casestudy.models.Order;
-import ke.co.sendy.casestudy.models.Trip;
+import ke.co.sendy.casestudy.models.Route;
 import ke.co.sendy.casestudy.util.Helpers;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This is the class that performs the application's estimation
  */
 class Estimator {
 	
-	private Map<Order, Double> orderDistanceToDropOffMap = new LinkedHashMap<>();
-	private Location tripStartLocation;
-	private Location tripEndLocation;
-	private ArrayList<Order> orderTripsArrayList = new ArrayList<>();
-	private Order precedingOrder = null;
-	private double previousOrderDistanceToDropOff;
+	/**
+	 * Holds a list of all locations
+	 */
+	private Set<Location> locations = new HashSet<>();
 	
 	/**
-	 * Get the location where a trip is set to begin
-	 *
-	 * @return location where a trip is set to begin
+	 * Various points on which stops will occur when orders are being picked up or dropped
 	 */
-	Location getTripStartLocation() {
-		return tripStartLocation;
+	private ArrayList<Location> stopPoints = new ArrayList<>();
+	
+	/**
+	 * The location where a route is set to begin
+	 */
+	private Location routeStartLocation;
+	
+	/**
+	 * Get the location where a route is set to begin
+	 *
+	 * @return location where a route is set to begin
+	 */
+	Location getRouteStartLocation() {
+		return routeStartLocation;
 	}
 	
 	/**
-	 * Set the tripStartLocation where a trip is set to begin
+	 * Set the location where a route to order's delivery is set to begin
 	 *
-	 * @param tripStartLocation tripStartLocation where a trip is supposed to begin
+	 * @param routeStartLocation location where a route to order's delivery is set to begin
 	 */
-	void setTripStartLocation(Location tripStartLocation) {
-		this.tripStartLocation = tripStartLocation;
-	}
-	
-	/**
-	 * Get the location where a trip is set to end
-	 *
-	 * @return location where a trip is supposed to end
-	 */
-	public Location getTripEndLocation() {
-		return tripEndLocation;
-	}
-	
-	/**
-	 * Gets the best routes for delivery
-	 *
-	 * @param tripStartLocation the location where a trip is set to begin
-	 * @param orders            a list of orders to be delivered
-	 */
-	ArrayList<Trip> selectBestRoute(Location tripStartLocation, ArrayList<Order> orders) {
-		this.tripStartLocation = tripStartLocation;
-		return selectBestRoute(orders);
+	void setRouteStartLocation(Location routeStartLocation) {
+		this.routeStartLocation = routeStartLocation;
 	}
 	
 	/**
 	 * Gets the best routes for delivery
 	 *
-	 * @param tripStartLocation the location where a trip is set to begin
-	 * @param orders            a list of orders to be delivered
+	 * @param routeStartLocation the location where a route is set to begin
+	 * @param orders             a list of orders to be delivered
 	 */
-	ArrayList<Trip> selectBestRoute(Location tripStartLocation, Location tripEndLocation, ArrayList<Order> orders) {
-		this.tripStartLocation = tripStartLocation;
-		this.tripEndLocation = tripEndLocation;
+	ArrayList<Route> selectBestRoute(Location routeStartLocation, ArrayList<Order> orders) throws Exception {
+		this.routeStartLocation = routeStartLocation;
 		return selectBestRoute(orders);
 	}
 	
@@ -74,73 +63,120 @@ class Estimator {
 	 *
 	 * @param orders a list of orders to be delivered
 	 */
-	ArrayList<Trip> selectBestRoute(ArrayList<Order> orders) {
-		
-		/*
-		  If an empty orders list is passed, avoid future errors by exiting.
-		 */
+	ArrayList<Route> selectBestRoute(ArrayList<Order> orders) throws Exception {
+
+        /*
+        If no routeStartLocation is null, assume the pickupLocation of the first order is the routeStartLocation
+         */
+		if (routeStartLocation == null) {
+			throw new Exception("Route Start Location Is Required");
+		}
+
+        /*
+		  If an empty orders list is passed, avoid errors ahead by exiting.
+         */
 		if (orders.isEmpty()) {
 			return new ArrayList<>();
 		}
-        
-        /*
-        If no tripStartLocation is null, assume the pickupLocation of the first order is the tripStartLocation
-        */
 		
-		if (tripStartLocation == null) {
-			Order firstOrder = orders.get(0);
-			tripStartLocation = new Location(firstOrder.getPickUpLocation().getName(),
-					firstOrder.getPickUpLocation().getLatitude(),
-					firstOrder.getPickUpLocation().getLongitude());
-		}
-        
-        /*
-        Get the difference between the start location and the different delivery
-        locations
-        */
+		/*
+		Sort according to distance from routeStartLocation
+		Get first dropOffLocation
+		From there start getting the closest town from the dropff and continue
+		 */
+		
 		orders.forEach(order -> {
-			double distanceToDropOff = Helpers.calculateDistance(
-					tripStartLocation.getLatitude(), tripStartLocation.getLongitude(),
-					order.getDropOffLocation().getLatitude(), order.getDropOffLocation().getLongitude()
-			);
-			orderDistanceToDropOffMap.put(order, distanceToDropOff);
+			locations.add(order.getPickUpLocation());
+			locations.add(order.getDropOffLocation());
 		});
 		
 		/*
-		 sort the orderDistanceToDropOffMap ascendingly, closest locations first
+		Get the shortest route from the start point to any location. That will be our first stop point
 		 */
-		orderDistanceToDropOffMap = Helpers.sortByValue(orderDistanceToDropOffMap);
+		final double[] closestDistanceFromStartPoint = {0};
+		final Location[] closestLocationFromStartPoint = {null};
 		
-		
-		/*loop through orderDistanceToDropOffMap, if there is a duplicate in distance, check if the previous order's
-		expectedTravelDistance is greater to the current, add them in order, else just add it to the list
-		 */
-		
-		orderDistanceToDropOffMap.keySet().forEach((order) -> {
-			if (precedingOrder != null) {
-				if (previousOrderDistanceToDropOff == orderDistanceToDropOffMap.get(order)) {
-					if (order.getExpectedTravelDistance() < precedingOrder.getExpectedTravelDistance()) {
-						int orderIndex = orderTripsArrayList.indexOf(precedingOrder);
-						orderTripsArrayList.add(orderIndex, order);
-					}
+		locations.forEach(location -> {
+			if (location != routeStartLocation) {
+				double distance = Helpers.calculateDistance(
+						routeStartLocation.getLatitude(), routeStartLocation.getLongitude(),
+						location.getLatitude(), location.getLongitude()
+				);
+				if (distance < closestDistanceFromStartPoint[0] || closestDistanceFromStartPoint[0] == 0) {
+					closestDistanceFromStartPoint[0] = distance;
+					closestLocationFromStartPoint[0] = location;
 				}
-				orderTripsArrayList.add(order);
-			} else {
-				orderTripsArrayList.add(order);
 			}
-			precedingOrder = order;
-			previousOrderDistanceToDropOff = orderDistanceToDropOffMap.get(order);
 		});
 		
 		/*
-		 * Remove duplicated orders in case some were created during our insert
+		Add where our route starts
 		 */
-		Set<Order> linkedHashSet = new LinkedHashSet<>(orderTripsArrayList);
-		orderTripsArrayList.clear();
-		orderTripsArrayList.addAll(linkedHashSet);
+		stopPoints.add(routeStartLocation);
+		locations.remove(routeStartLocation);
 		
-		return new ArrayList<>();
+		/*
+		Get the closest location from the route start point which becomes a stop point
+		 */
+		stopPoints.add(closestLocationFromStartPoint[0]);
+		locations.remove(closestLocationFromStartPoint[0]);
+		
+		/*
+		Run a loop to get the closest location from each stop point.
+		Once found remove the location from the ArrayList to eliminate repetition, duplicated and an infinite loop
+		 */
+		while (!locations.isEmpty()) {
+			Location nextLocation = getClosestLocation(closestLocationFromStartPoint[0]);
+			closestLocationFromStartPoint[0] = nextLocation;
+			locations.remove(nextLocation);
+			stopPoints.add(nextLocation);
+		}
+		
+		/*
+		Create a list of routes with various orders
+		 */
+		ArrayList<Route> routesWithOrders = new ArrayList<>();
+		
+		for (int index = 0; index < stopPoints.size(); index++) {
+			Location location = stopPoints.get(index);
+			Route route = new Route();
+			orders.forEach(order -> {
+				if (order.getPickUpLocation() == location) {
+					route.addPickUpOrder(order);
+				}
+				if (order.getDropOffLocation() == location) {
+					route.addDropOffOrder(order);
+				}
+			});
+			route.setStartPoint(location);
+			Location endPoint = null;
+			if (index + 1 < stopPoints.size()) {
+				endPoint = stopPoints.get(index + 1);
+			}
+			route.setEndPoint(endPoint);
+			routesWithOrders.add(route);
+		}
+		return routesWithOrders;
 	}
 	
-	
+	private Location getClosestLocation(Location checkLocation) {
+		
+		final double[] closestDistance = {0};
+		final Location[] closestLocation = {null};
+		
+		locations.forEach(location -> {
+			if (location != checkLocation) {
+				double distance = Helpers.calculateDistance(
+						checkLocation.getLatitude(), checkLocation.getLongitude(),
+						location.getLatitude(), location.getLongitude()
+				);
+				if (distance < closestDistance[0] || closestDistance[0] == 0) {
+					closestDistance[0] = distance;
+					closestLocation[0] = location;
+				}
+			}
+		});
+		
+		return closestLocation[0];
+	}
 }

@@ -2,6 +2,8 @@ package ke.co.sendy.casestudy;
 
 import ke.co.sendy.casestudy.models.Location;
 import ke.co.sendy.casestudy.models.Order;
+import ke.co.sendy.casestudy.models.Route;
+import ke.co.sendy.casestudy.util.Helpers;
 
 import java.util.ArrayList;
 
@@ -96,42 +98,56 @@ public class MainApplication {
 		/*
 		Set where the trip begins
 		 */
-		estimator.setTripStartLocation(nairobi);
+		estimator.setRouteStartLocation(nairobi);
 		
 		/*
 		Ask for the best route
 		 */
-		estimator.selectBestRoute(orders);
-		
-		/*
-		ArrayList<Trip> tripsWithOrders = estimator.selectBestRoute(orders);
-		if (!tripsWithOrders.isEmpty()) {
-			
-			System.out.println("\nWe suggest the following routes for delivery of orders\n");
-			
-			for (int index = 0; index < tripsWithOrders.size(); index++) {
-				Trip trip = tripsWithOrders.get(index);
-				ArrayList<Order> fullTripOrders = trip.getOrders();
-				System.out.println("Route: " + (index + 1));
-				System.out.println("Route Distance (KM): " + Helpers.round(trip.getFullDistance()));
-				System.out.println("Route Start Point: " + trip.getStartPoint().getLatitude() + "," +
-						trip.getStartPoint().getLongitude());
-				System.out.println("Route End Point: " + trip.getEndPoint().getLatitude() + "," +
-						trip.getEndPoint().getLongitude());
-				System.out.println("\n\tTrip Orders");
-				System.out.println("\tTotal Orders: " + fullTripOrders.size() + "\n\t---");
-				fullTripOrders.forEach(order -> {
-					System.out.println("\tOrder name: " + order.getName());
-					System.out.println("\tOrder destination: " + order.getDropOffLocation().getLatitude() + "," +
-							order.getDropOffLocation().getLongitude());
-					System.out.println("\tOrder distance (KM): " + Helpers.round(order.getExpectedTravelDistance()));
-					System.out.println("\tCost (KES): " + order.getOrderCost());
-					System.out.println("\n");
-				});
+		try {
+			ArrayList<Route> routesWithOrders = estimator.selectBestRoute(orders);
+			if (!routesWithOrders.isEmpty()) {
+				
+				System.out.println("\nWe suggest the following routes for delivery of orders\n");
+				
+				for (int index = 0; index < routesWithOrders.size(); index++) {
+					Route route = routesWithOrders.get(index);
+					ArrayList<Order> pickUpOrders = route.getPickUpOrders();
+					ArrayList<Order> dropOffOrders = route.getDropOffOrders();
+					System.out.println("Route: " + (index + 1));
+					System.out.println("Route Distance (KM): " + Helpers.round(route.getDistance()));
+					System.out.println("Route Start Point: " + route.getStartPoint().getName() + " (" + route.getStartPoint().getLatitude() + "," +
+							route.getStartPoint().getLongitude() + ")");
+					System.out.println("Route End Point: " + route.getEndPoint().getName() + " (" + route.getEndPoint().getLatitude() + "," +
+							route.getEndPoint().getLongitude() + ")");
+					System.out.println("\n\tRoute Orders");
+					System.out.println("\tTotal Orders: " + (pickUpOrders.size() + dropOffOrders.size()) + "\n\t---");
+					printOrders(pickUpOrders, true);
+					printOrders(dropOffOrders, false);
+				}
+			} else {
+				System.out.println("\nNo orders for today\n");
 			}
-		} else {
-			System.out.println("\nNo orders for today\n");
-		}*/
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void printOrders(ArrayList<Order> orders, boolean isPickupOrders) {
 		
+		String title = isPickupOrders ? "Pick Up Orders" : "Drop Off Orders";
+		
+		if (!orders.isEmpty()) {
+			System.out.println("\t" + title + ": " + (orders.size()) + "\n");
+		}
+		orders.forEach(order -> {
+			System.out.println("\tOrder name: " + order.getName());
+			System.out.println("\tOrder Source: " + order.getPickUpLocation().getName() + " " +
+					"(" + order.getDropOffLocation().getLatitude() + "," + order.getDropOffLocation().getLongitude() + ")");
+			System.out.println("\tOrder Destination: " + order.getDropOffLocation().getName() + " " +
+					"(" + order.getDropOffLocation().getLatitude() + "," + order.getDropOffLocation().getLongitude() + ")");
+			System.out.println("\tOrder Distance (KM): " + Helpers.round(order.getExpectedTravelDistance()));
+			System.out.println("\tCost (KES): " + order.getOrderCost());
+			System.out.println("\n");
+		});
 	}
 }
