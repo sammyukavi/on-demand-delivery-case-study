@@ -2,8 +2,6 @@ package ke.co.sendy.casestudy.models;
 
 import ke.co.sendy.casestudy.util.Helpers;
 
-import org.joda.time.DateTime;
-
 import static ke.co.sendy.casestudy.util.Constants.BillingUnits.COST_PER_KILOMETRE;
 import static ke.co.sendy.casestudy.util.Constants.BillingUnits.ROUND_TO_PLACES;
 import static ke.co.sendy.casestudy.util.Constants.DistanceUnits.KILOMETRES;
@@ -25,11 +23,6 @@ public class Order {
 	 * The location where an order is going to be dropped off
 	 */
 	private Location dropOffLocation;
-	
-	/**
-	 * The time when an order was dropped off for delivery
-	 */
-	private DateTime dropOffTime;
 	
 	/**
 	 * The location where an order is going to be picked up
@@ -107,7 +100,7 @@ public class Order {
 	 * @return a float containing the cost of the order
 	 */
 	public double getOrderCost() {
-		return Helpers.round(getExpectedTravelDistanceKiloMetres() * COST_PER_KILOMETRE, ROUND_TO_PLACES);
+		return Helpers.round(getExpectedTravelDistance() * COST_PER_KILOMETRE, ROUND_TO_PLACES);
 	}
 	
 	/**
@@ -115,26 +108,9 @@ public class Order {
 	 *
 	 * @return a double indicating the distance between the pick up location and drop off location in kilometres
 	 */
-	public double getExpectedTravelDistanceKiloMetres() {
+	public double getExpectedTravelDistance() {
 		return calculateDistance(pickUpLocation.getLatitude(), pickUpLocation.getLongitude(), dropOffLocation.getLatitude(),
 				dropOffLocation.getLongitude(), KILOMETRES);
 	}
 	
-	/**
-	 * Get the time when an order was dropped off.
-	 *
-	 * @return the time when an order was dropped off
-	 */
-	public DateTime getDropOffTime() {
-		return dropOffTime;
-	}
-	
-	/**
-	 * Set the time when an order was dropped off
-	 *
-	 * @param dropOffTime the time when an order was dropped off
-	 */
-	public void setDropOffTime(DateTime dropOffTime) {
-		this.dropOffTime = dropOffTime;
-	}
 }

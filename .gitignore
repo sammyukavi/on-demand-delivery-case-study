@@ -37,3 +37,4 @@ nbdist/
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
+/src/main/java/ke/co/sendy/casestudy/util/Console.java
