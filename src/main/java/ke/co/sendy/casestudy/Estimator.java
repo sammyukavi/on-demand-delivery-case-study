@@ -148,17 +148,26 @@ class Estimator {
 					route.addDropOffOrder(order);
 				}
 			});
-			route.setStartPoint(location);
-			Location endPoint = null;
+			
 			if (index + 1 < stopPoints.size()) {
-				endPoint = stopPoints.get(index + 1);
+				route.setStartPoint(location);
+				route.setEndPoint(stopPoints.get(index + 1));
+			} else {
+				route.setStartPoint(stopPoints.get(index - 1));
+				route.setEndPoint(location);
 			}
-			route.setEndPoint(endPoint);
+			
 			routesWithOrders.add(route);
 		}
 		return routesWithOrders;
 	}
 	
+	/**
+	 * Checks for the closest location from one location using the global locations ArrayList
+	 *
+	 * @param checkLocation location to check for the closest
+	 * @return the closest location to that given
+	 */
 	private Location getClosestLocation(Location checkLocation) {
 		
 		final double[] closestDistance = {0};
