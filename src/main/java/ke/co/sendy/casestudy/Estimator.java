@@ -82,7 +82,7 @@ class Estimator {
 		/*
 		Sort according to distance from routeStartLocation
 		Get first dropOffLocation
-		From there start getting the closest town from the dropff and continue
+		From there start getting the closest town from the dropOff and so on
 		 */
 		
 		orders.forEach(order -> {

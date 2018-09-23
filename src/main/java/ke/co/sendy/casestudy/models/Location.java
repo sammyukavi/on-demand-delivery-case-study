@@ -7,9 +7,19 @@ package ke.co.sendy.casestudy.models;
  */
 public class Location {
 	
+	/**
+	 * The latitude coordinate of a location
+	 */
 	private double latitude;
 	
+	/**
+	 * The longitude coordinates of a location
+	 */
 	private double longitude;
+	
+	/**
+	 * The name of a location
+	 */
 	private String name;
 	
 	public Location(double latitude, double longitude) {

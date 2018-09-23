@@ -103,19 +103,37 @@ public class Route {
 		this.pickUpOrders = pickUpOrders;
 	}
 	
+	/**
+	 * Get the name of a route
+	 *
+	 * @return the name of a route
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Set the name of a route
+	 * @param name the name of the route
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
+	/**
+	 * Get the length of a route in Kilometres. Calculated as the difference between a start point and  end point of a
+	 * route
+	 * @return length of a route in Kilometres
+	 */
 	public double getDistance() {
 		return Helpers.calculateDistance(startPoint.getLatitude(), startPoint.getLongitude(),
 				endPoint.getLatitude(), endPoint.getLongitude());
 	}
 	
+	/**
+	 * Add an order that should be dropped off
+	 * @param order the order to be dropped off.
+	 */
 	public void addDropOffOrder(Order order) {
 		this.dropOffOrders.add(order);
 		Set<Order> linkedHashSet = new LinkedHashSet<>(this.dropOffOrders);
@@ -123,11 +141,11 @@ public class Route {
 		this.dropOffOrders.addAll(linkedHashSet);
 	}
 	
+	/**
+	 * Get list of orders that should be dropped off
+	 * @return list of orders to be dropped off
+	 */
 	public ArrayList<Order> getDropOffOrders() {
 		return dropOffOrders;
-	}
-	
-	public void setDropOffOrders(ArrayList<Order> dropOffOrders) {
-		this.dropOffOrders = dropOffOrders;
 	}
 }
