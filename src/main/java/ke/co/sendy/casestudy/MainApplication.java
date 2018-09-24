@@ -113,6 +113,8 @@ public class MainApplication {
 		Set where the trip begins
 		 */
 		estimator.setRouteStartLocation(nairobi);
+
+		//CollectionUtils.getCardinalityMap(expectedRoutesList);
 		
 		/*
 		Ask for the best route
