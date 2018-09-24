@@ -5,6 +5,7 @@ import org.junit.Test;
 
 /**
  * Test the order class
+ *
  * @author sukavi
  */
 public class OrderTest {

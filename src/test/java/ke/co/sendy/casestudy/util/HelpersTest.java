@@ -6,6 +6,7 @@ import org.junit.Test;
 
 /**
  * Test the helpers class
+ *
  * @author sukavi
  */
 public class HelpersTest {

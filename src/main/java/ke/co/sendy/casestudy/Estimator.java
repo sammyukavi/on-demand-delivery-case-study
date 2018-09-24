@@ -14,7 +14,6 @@ import java.util.Set;
  */
 class Estimator {
 	
-	Route route;
 	/**
 	 * Holds a list of all locations
 	 */
@@ -29,6 +28,11 @@ class Estimator {
 	 * The location where a route is set to begin
 	 */
 	private Location routeStartLocation;
+	
+	/**
+	 * The location where a route is set to begin
+	 */
+	private Location routeEndLocation;
 	
 	/**
 	 * Get the location where a route is set to begin
@@ -46,6 +50,15 @@ class Estimator {
 	 */
 	void setRouteStartLocation(Location routeStartLocation) {
 		this.routeStartLocation = routeStartLocation;
+	}
+	
+	/**
+	 * Get an estimated location where a trip is set to end
+	 *
+	 * @return Location estimated where a trip is set to end
+	 */
+	public Location getRouteEndLocation() {
+		return routeEndLocation;
 	}
 	
 	/**
@@ -140,13 +153,16 @@ class Estimator {
 		
 		for (int index = 0; index < stopPoints.size(); index++) {
 			
+			/*
+			Merge the last two stop points to make one trip. It all makes sense. Trust me.
+			 */
 			if (index + 1 == stopPoints.size()) {
 				break;
 			}
 			
 			Location location = stopPoints.get(index);
 			
-			route = new Route();
+			Route route = new Route();
 			
 			route.setStartPoint(location);
 			
@@ -169,9 +185,21 @@ class Estimator {
 			routesWithOrders.add(route);
 			
 		}
+		
+		if (!routesWithOrders.isEmpty()) {
+			this.routeEndLocation = routesWithOrders.get(routesWithOrders.size() - 1).getEndPoint();
+		}
+		
 		return routesWithOrders;
 	}
 	
+	/**
+	 * Get a list of pickup orders from a location
+	 *
+	 * @param orders   List of all orders in a trip
+	 * @param location Location where you'd like to extract the list of orders
+	 * @return ArrayList of orders from a certain location
+	 */
 	private ArrayList<Order> getPickUpOrders(ArrayList<Order> orders, Location location) {
 		ArrayList<Order> pickUpOrders = new ArrayList<>();
 		orders.forEach(order -> {
@@ -182,6 +210,13 @@ class Estimator {
 		return pickUpOrders;
 	}
 	
+	/**
+	 * Get a list of dropOff orders from a location
+	 *
+	 * @param orders   List of all orders in a trip
+	 * @param location Location where you'd like to extract the list of orders
+	 * @return ArrayList of orders from a certain location
+	 */
 	private ArrayList<Order> getDropOffOrders(ArrayList<Order> orders, Location location) {
 		ArrayList<Order> dropOffOrders = new ArrayList<>();
 		orders.forEach(order -> {
@@ -218,4 +253,5 @@ class Estimator {
 		
 		return closestLocation[0];
 	}
+	
 }

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Test the location class
+ *
  * @author sukavi
  */
 public class LocationTest {
