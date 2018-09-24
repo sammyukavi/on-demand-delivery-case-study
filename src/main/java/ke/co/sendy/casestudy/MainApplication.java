@@ -29,6 +29,9 @@ public class MainApplication {
 		
 		/*
 		To simulate the process we first create pickup and delivery locations for various orders
+		
+		Getting co-ordinates to actual places from here http://latitudelongitude.org/ke/kisii/
+		
 		*/
 		
 		Location nairobi = new Location(-1.28333d, 36.81667d);

@@ -8,6 +8,11 @@ package ke.co.sendy.casestudy.models;
 public class Location {
 	
 	/**
+	 * The name of a location
+	 */
+	private String name;
+	
+	/**
 	 * The latitude coordinate of a location
 	 */
 	private double latitude;
@@ -17,10 +22,7 @@ public class Location {
 	 */
 	private double longitude;
 	
-	/**
-	 * The name of a location
-	 */
-	private String name;
+	
 	
 	public Location(double latitude, double longitude) {
 		this.latitude = latitude;
@@ -31,6 +33,10 @@ public class Location {
 		this.name = name;
 		this.latitude = latitude;
 		this.longitude = longitude;
+	}
+	
+	public Location() {
+	
 	}
 	
 	/**
@@ -70,6 +76,15 @@ public class Location {
 	}
 	
 	/**
+	 * Set the name of a location
+	 *
+	 * @param name name of the location
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	/**
 	 * Get the name of a location
 	 *
 	 * @return name of the location
@@ -78,12 +93,5 @@ public class Location {
 		return name;
 	}
 	
-	/**
-	 * Set the name of a location
-	 *
-	 * @param name name of the location
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 }
