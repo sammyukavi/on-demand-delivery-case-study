@@ -42,6 +42,12 @@ public class Route {
 	
 	}
 	
+	public Route(String name, Location startPoint, Location endPoint) {
+		this.name = name;
+		this.startPoint = startPoint;
+		this.endPoint = endPoint;
+	}
+	
 	/**
 	 * Get the starting point of a route
 	 *
@@ -99,10 +105,6 @@ public class Route {
 		return pickUpOrders;
 	}
 	
-	public void setPickUpOrders(ArrayList<Order> pickUpOrders) {
-		this.pickUpOrders = pickUpOrders;
-	}
-	
 	/**
 	 * Get the name of a route
 	 *
@@ -114,6 +116,7 @@ public class Route {
 	
 	/**
 	 * Set the name of a route
+	 *
 	 * @param name the name of the route
 	 */
 	public void setName(String name) {
@@ -123,6 +126,7 @@ public class Route {
 	/**
 	 * Get the length of a route in Kilometres. Calculated as the difference between a start point and  end point of a
 	 * route
+	 *
 	 * @return length of a route in Kilometres
 	 */
 	public double getDistance() {
@@ -132,6 +136,7 @@ public class Route {
 	
 	/**
 	 * Add an order that should be dropped off
+	 *
 	 * @param order the order to be dropped off.
 	 */
 	public void addDropOffOrder(Order order) {
@@ -143,6 +148,7 @@ public class Route {
 	
 	/**
 	 * Get list of orders that should be dropped off
+	 *
 	 * @return list of orders to be dropped off
 	 */
 	public ArrayList<Order> getDropOffOrders() {

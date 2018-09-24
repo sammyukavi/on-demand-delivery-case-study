@@ -29,14 +29,23 @@ public class OrderTest {
 		Order order = new Order("Test Order 1", kiambu, machakos);
 		
 		Assert.assertEquals("Test Order 1", order.getName());
-		Assert.assertEquals(61.9257091142683, order.getExpectedTravelDistance(), 0);
-		Assert.assertEquals(1857.77, order.getOrderCost(), 0);
+		Assert.assertEquals(62, Math.ceil(order.getExpectedTravelDistance()), 0);
+		Assert.assertEquals(1857.86, order.getOrderCost(), 0);
 		
 		Order order2 = new Order("Test Order 2", kiambu, kitui);
 		
 		Assert.assertEquals("Test Order 2", order2.getName());
-		Assert.assertEquals(132.7439737437885, order2.getExpectedTravelDistance(), 0);
-		Assert.assertEquals(3982.32, order2.getOrderCost(), 0);
+		Assert.assertEquals(133, Math.ceil(order2.getExpectedTravelDistance()), 0);
+		Assert.assertEquals(3982.51, order2.getOrderCost(), 0);
+		
+		Order order3 = new Order();
+		order3.setName("Stationary Order");
+		order3.setPickUpLocation(machakos);
+		order3.setDropOffLocation(machakos);
+		
+		Assert.assertEquals("Stationary Order", order3.getName());
+		Assert.assertEquals(machakos, order3.getPickUpLocation());
+		Assert.assertEquals(machakos, order3.getDropOffLocation());
 		
 	}
 	

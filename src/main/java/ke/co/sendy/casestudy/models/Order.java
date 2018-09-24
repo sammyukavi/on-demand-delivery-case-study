@@ -4,7 +4,6 @@ import ke.co.sendy.casestudy.util.Helpers;
 
 import static ke.co.sendy.casestudy.util.Constants.BillingUnits.COST_PER_KILOMETRE;
 import static ke.co.sendy.casestudy.util.Constants.BillingUnits.ROUND_TO_PLACES;
-import static ke.co.sendy.casestudy.util.Constants.DistanceUnits.KILOMETRES;
 import static ke.co.sendy.casestudy.util.Helpers.calculateDistance;
 
 /**
@@ -36,7 +35,7 @@ public class Order {
 	 * @param pickUpLocation  Location where an order should be picked up from
 	 * @param dropOffLocation Location where an order should be delivered at
 	 */
-	Order(String name, Location pickUpLocation, Location dropOffLocation) {
+	public Order(String name, Location pickUpLocation, Location dropOffLocation) {
 		this.name = name;
 		this.pickUpLocation = pickUpLocation;
 		this.dropOffLocation = dropOffLocation;
@@ -116,7 +115,7 @@ public class Order {
 	 */
 	public double getExpectedTravelDistance() {
 		return calculateDistance(pickUpLocation.getLatitude(), pickUpLocation.getLongitude(), dropOffLocation.getLatitude(),
-				dropOffLocation.getLongitude(), KILOMETRES);
+				dropOffLocation.getLongitude());
 	}
 	
 }

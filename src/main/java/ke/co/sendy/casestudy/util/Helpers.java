@@ -2,38 +2,16 @@ package ke.co.sendy.casestudy.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import static ke.co.sendy.casestudy.util.Constants.BillingUnits.ROUND_TO_PLACES;
-import static ke.co.sendy.casestudy.util.Constants.DistanceUnits.KILOMETRES;
 
 /**
  * This class contains helper functions used in the application
  */
 public class Helpers {
 	
-	/**
-	 * Sorts a map by value
-	 *
-	 * @param map the map to be sorted
-	 * @param <K> any object
-	 * @param <V> any object
-	 * @return sorted map
-	 */
-	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-		List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
-		list.sort(Map.Entry.comparingByValue());
-		
-		Map<K, V> result = new LinkedHashMap<>();
-		for (Map.Entry<K, V> entry : list) {
-			result.put(entry.getKey(), entry.getValue());
-		}
-		
-		return result;
-	}
+	private static final int EARTH_RADIUS = 6371; // Approx Earth radius in KM
+	
 	
 	/**
 	 * Rounds numbers to defined decimal places
@@ -61,52 +39,7 @@ public class Helpers {
 	}
 	
 	/**
-	 * Converts decimal degrees to radians
-	 *
-	 * @param deg a double containing the degrees to convert
-	 * @return a double containing the converted radians
-	 */
-	private static double deg2rad(double deg) {
-		return (deg * Math.PI / 180.0);
-	}
-	
-	/**
-	 * Converts radians to decimal degrees
-	 *
-	 * @param rad a double containing the radians to convert to degrees
-	 * @return a double containing the converted degrees
-	 */
-	private static double rad2deg(double rad) {
-		return (rad * 180 / Math.PI);
-	}
-	
-	/**
-	 * Calculates the distance between two locations
-	 *
-	 * @param lat1 Latitude of location 1
-	 * @param lon1 Longitude of location 1
-	 * @param lat2 Latitude of location 2
-	 * @param lon2 Latitude of location 2
-	 * @param unit Measurement unit to be used in calculation
-	 * @return distance in the given units
-	 */
-	public static double calculateDistance(double lat1, double lon1, double lat2, double lon2, String unit) {
-		double theta = lon1 - lon2;
-		double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-		dist = Math.acos(dist);
-		dist = rad2deg(dist);
-		dist = dist * 60 * 1.1515;
-		if (("K").equals(unit)) {
-			dist = dist * 1.609344;
-		} else if (("N").equals(unit)) {
-			dist = dist * 0.8684;
-		}
-		
-		return (dist);
-	}
-	
-	/**
-	 * Calculates the distance between two locations
+	 * Calculates the distance between two locations using the Haversine formula.
 	 *
 	 * @param latitude1  Latitude of location 1
 	 * @param longitude1 Longitude of location 1
@@ -115,7 +48,26 @@ public class Helpers {
 	 * @return distance in the given units
 	 */
 	public static double calculateDistance(double latitude1, double longitude1, double latitude2, double longitude2) {
-		return calculateDistance(latitude1, longitude1, latitude2, longitude2, KILOMETRES);
+		
+		double dLat = Math.toRadians((latitude2 - latitude1));
+		double dLong = Math.toRadians((longitude2 - longitude1));
+		
+		latitude1 = Math.toRadians(latitude1);
+		latitude2 = Math.toRadians(latitude2);
+		
+		double a = haversin(dLat) + Math.cos(latitude1) * Math.cos(latitude2) * haversin(dLong);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		
+		return EARTH_RADIUS * c;
 	}
 	
+	/**
+	 * Calculates a sin for use with the Haversine formula.
+	 *
+	 * @param value number to use for calculation
+	 * @return calculated value
+	 */
+	private static double haversin(double value) {
+		return Math.pow(Math.sin(value / 2), 2);
+	}
 }

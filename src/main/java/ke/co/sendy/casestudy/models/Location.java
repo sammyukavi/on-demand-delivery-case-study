@@ -23,7 +23,6 @@ public class Location {
 	private double longitude;
 	
 	
-	
 	public Location(double latitude, double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -76,21 +75,21 @@ public class Location {
 	}
 	
 	/**
-	 * Set the name of a location
-	 *
-	 * @param name name of the location
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	/**
 	 * Get the name of a location
 	 *
 	 * @return name of the location
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	/**
+	 * Set the name of a location
+	 *
+	 * @param name name of the location
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	
