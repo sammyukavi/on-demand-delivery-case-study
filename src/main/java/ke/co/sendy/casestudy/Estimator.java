@@ -14,6 +14,7 @@ import java.util.Set;
  */
 class Estimator {
 	
+	Route route;
 	/**
 	 * Holds a list of all locations
 	 */
@@ -138,28 +139,57 @@ class Estimator {
 		ArrayList<Route> routesWithOrders = new ArrayList<>();
 		
 		for (int index = 0; index < stopPoints.size(); index++) {
-			Location location = stopPoints.get(index);
-			Route route = new Route();
-			orders.forEach(order -> {
-				if (order.getPickUpLocation() == location) {
-					route.addPickUpOrder(order);
-				}
-				if (order.getDropOffLocation() == location) {
-					route.addDropOffOrder(order);
-				}
-			});
 			
-			if (index + 1 < stopPoints.size()) {
-				route.setStartPoint(location);
-				route.setEndPoint(stopPoints.get(index + 1));
-			} else {
-				route.setStartPoint(stopPoints.get(index - 1));
-				route.setEndPoint(location);
+			if (index + 1 == stopPoints.size()) {
+				break;
 			}
 			
+			Location location = stopPoints.get(index);
+			
+			route = new Route();
+			
+			route.setStartPoint(location);
+			
+			route.setEndPoint(stopPoints.get(index + 1));
+			
+			if (index == stopPoints.size() - 2) {
+				
+				route.addPickUpOrders(getPickUpOrders(orders, location));
+				
+				route.addDropOffOrders(getDropOffOrders(orders, location));
+				
+				location = stopPoints.get(index + 1);
+				
+			}
+			
+			route.addPickUpOrders(getPickUpOrders(orders, location));
+			
+			route.addDropOffOrders(getDropOffOrders(orders, location));
+			
 			routesWithOrders.add(route);
+			
 		}
 		return routesWithOrders;
+	}
+	
+	private ArrayList<Order> getPickUpOrders(ArrayList<Order> orders, Location location) {
+		ArrayList<Order> pickUpOrders = new ArrayList<>();
+		orders.forEach(order -> {
+			if (order.getPickUpLocation() == location) {
+				pickUpOrders.add(order);
+			}
+		});
+		return pickUpOrders;
+	}
+	
+	private ArrayList<Order> getDropOffOrders(ArrayList<Order> orders, Location location) {
+		ArrayList<Order> dropOffOrders = new ArrayList<>();
+		orders.forEach(order -> {
+			if (order.getDropOffLocation() == location) {
+				dropOffOrders.add(order);
+			}
+		});
+		return dropOffOrders;
 	}
 	
 	/**

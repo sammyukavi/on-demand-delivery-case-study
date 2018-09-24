@@ -97,6 +97,18 @@ public class Route {
 	}
 	
 	/**
+	 * Add a list of orders to the list of pick Up Orders belonging to the route
+	 *
+	 * @param orders A list of orders to be added to the list of pick Up Orders
+	 */
+	public void addPickUpOrders(ArrayList<Order> orders) {
+		this.pickUpOrders.addAll(orders);
+		Set<Order> linkedHashSet = new LinkedHashSet<>(this.pickUpOrders);
+		this.pickUpOrders.clear();
+		this.pickUpOrders.addAll(linkedHashSet);
+	}
+	
+	/**
 	 * Add an order to the list of pickUpOrders belonging to the route
 	 *
 	 * @return of pickUpOrders belonging to the route
@@ -147,6 +159,18 @@ public class Route {
 	}
 	
 	/**
+	 * Add a list of orders that should be dropped off
+	 *
+	 * @param orders The list of orders to be dropped off.
+	 */
+	public void addDropOffOrders(ArrayList<Order> orders) {
+		this.dropOffOrders.addAll(orders);
+		Set<Order> linkedHashSet = new LinkedHashSet<>(this.dropOffOrders);
+		this.dropOffOrders.clear();
+		this.dropOffOrders.addAll(linkedHashSet);
+	}
+	
+	/**
 	 * Get list of orders that should be dropped off
 	 *
 	 * @return list of orders to be dropped off
@@ -154,4 +178,5 @@ public class Route {
 	public ArrayList<Order> getDropOffOrders() {
 		return dropOffOrders;
 	}
+	
 }
