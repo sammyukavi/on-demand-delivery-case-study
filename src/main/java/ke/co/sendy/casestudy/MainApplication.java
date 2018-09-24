@@ -21,10 +21,12 @@ public class MainApplication {
 	public static void main(String[] args) {
 		
 		/*
-		We are going to simulate an order's journey from Nairobi to Kampala
-		In  the trip another package will be leaving Malaba for Kampala
-		,another package will be leaving Kisumu for Busia
-		and another package will be leaving Busia for Kampala
+		We are going to simulate an order's journey from Nairobi to Malaba
+		In  the trip another package will be leaving Nairobi for Kampala
+		,another package will be leaving Malaba for Kampala,
+		,another package will be leaving Malaba for Busia,
+		,another package will be leaving Kisumu for Busia,
+		and another package will be leaving Kisii for Busia
 		*/
 		
 		/*
