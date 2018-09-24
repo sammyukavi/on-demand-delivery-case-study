@@ -1,146 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ke.co.sendy.casestudy.models;
 
-import org.junit.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
+ * Test the order class
  * @author sukavi
  */
 public class OrderTest {
 	
-	public OrderTest() {
-	}
-	
-	@BeforeClass
-	public static void setUpClass() {
-	}
-	
-	@AfterClass
-	public static void tearDownClass() {
-	}
-	
-	@Before
-	public void setUp() {
-	}
-	
-	@After
-	public void tearDown() {
-	}
-	
-	/**
-	 * Test of getName method, of class Order.
-	 */
 	@Test
-	public void testGetName() {
-		System.out.println("getName");
-		Order instance = new Order();
-		String expResult = "";
-		String result = instance.getName();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-	
-	/**
-	 * Test of setName method, of class Order.
-	 */
-	@Test
-	public void testSetName() {
-		System.out.println("setName");
-		String name = "";
-		Order instance = new Order();
-		instance.setName(name);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-	
-	/**
-	 * Test of getDropOffLocation method, of class Order.
-	 */
-	@Test
-	public void testGetDropOffLocation() {
-		System.out.println("getDropOffLocation");
-		Order instance = new Order();
-		Location expResult = null;
-		Location result = instance.getDropOffLocation();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-	
-	/**
-	 * Test of setDropOffLocation method, of class Order.
-	 */
-	@Test
-	public void testSetDropOffLocation() {
-		System.out.println("setDropOffLocation");
-		Location dropOffLocation = null;
-		Order instance = new Order();
-		instance.setDropOffLocation(dropOffLocation);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-	
-	/**
-	 * Test of getPickUpLocation method, of class Order.
-	 */
-	@Test
-	public void testGetPickUpLocation() {
-		System.out.println("getPickUpLocation");
-		Order instance = new Order();
-		Location expResult = null;
-		Location result = instance.getPickUpLocation();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-	
-	/**
-	 * Test of setPickUpLocation method, of class Order.
-	 */
-	@Test
-	public void testSetPickUpLocation() {
-		System.out.println("setPickUpLocation");
-		Location pickUpLocation = null;
-		Order instance = new Order();
-		instance.setPickUpLocation(pickUpLocation);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-	
-	/**
-	 * Test of getOrderCost method, of class Order.
-	 */
-	@Test
-	public void testGetOrderCost() {
-		System.out.println("getOrderCost");
-		Order instance = new Order();
-		double expResult = 0.0;
-		double result = instance.getOrderCost();
-		assertEquals(expResult, result, 0.0);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-	
-	/**
-	 * Test of getExpectedTravelDistance method, of class Order.
-	 */
-	@Test
-	public void testGetExpectedTravelDistance() {
-		System.out.println("getExpectedTravelDistance");
-		Order instance = new Order();
-		double expResult = 0.0;
-		double result = instance.getExpectedTravelDistance();
-		assertEquals(expResult, result, 0.0);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+	public void testOrdersObject() {
+		
+		String orderName = "Some Order";
+		Location kiambu = new Location(-1.16667d, 36.83333d);
+		Location machakos = new Location(-1.51667d, 37.26667d);
+		Location kitui = new Location(-1.36696d, 38.01055d);
+		
+		Order orderObj = new Order();
+		orderObj.setName(orderName);
+		orderObj.setPickUpLocation(machakos);
+		orderObj.setDropOffLocation(kitui);
+		
+		Assert.assertEquals(orderName, orderObj.getName());
+		Assert.assertEquals(machakos, orderObj.getPickUpLocation());
+		Assert.assertEquals(kitui, orderObj.getDropOffLocation());
+		
+		Order order = new Order("Test Order 1", kiambu, machakos);
+		
+		Assert.assertEquals("Test Order 1", order.getName());
+		Assert.assertEquals(61.9257091142683, order.getExpectedTravelDistance(), 0);
+		Assert.assertEquals(1857.77, order.getOrderCost(), 0);
+		
+		Order order2 = new Order("Test Order 2", kiambu, kitui);
+		
+		Assert.assertEquals("Test Order 2", order2.getName());
+		Assert.assertEquals(132.7439737437885, order2.getExpectedTravelDistance(), 0);
+		Assert.assertEquals(3982.32, order2.getOrderCost(), 0);
+		
 	}
 	
 }

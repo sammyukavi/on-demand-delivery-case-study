@@ -29,7 +29,13 @@ public class Order {
 	 */
 	private Location pickUpLocation;
 	
-	
+	/**
+	 * Create an instance of the order object
+	 *
+	 * @param name            Name of the order
+	 * @param pickUpLocation  Location where an order should be picked up from
+	 * @param dropOffLocation Location where an order should be delivered at
+	 */
 	Order(String name, Location pickUpLocation, Location dropOffLocation) {
 		this.name = name;
 		this.pickUpLocation = pickUpLocation;
